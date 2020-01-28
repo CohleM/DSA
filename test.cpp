@@ -1,7 +1,7 @@
 #include <iostream>
 #include <queue>
+#include<stack>
 #include <vector>
-
 using namespace std;
 
 //linkedListSection
@@ -65,7 +65,6 @@ node **retAddress(vector<vertices> vertices, int data)
 //graphSection
 
 //breadthFirstSearch
-int count = 0;
 
 bool checkQ(vector<int> q, int data)
 {
@@ -77,22 +76,54 @@ bool checkQ(vector<int> q, int data)
     }
     return true;
 }
+
+void depthFirstSearch(vector<vertices> v, node **res, int x)
+{
+    vector<int> visited; // track of numbers which already were in queue
+    queue<int> Q;
+    stack<int> S;
+    node *temp;
+    //First pushing the startingPoint
+    S.push(x);
+    visited.push_back(x);
+    //mainIteration
+    while (!S.empty())
+    {
+        int foo = S.top();
+        S.pop();
+        //get the address of
+        temp = *retAddress(v, foo);
+        insertAtTail(res, foo); // inserting at res
+        //visited.push_back(foo);
+        while (temp != NULL)
+        {
+            if (checkQ(visited, temp->data))
+            {
+                S.push(temp->data);
+                visited.push_back(temp->data);
+            }
+            temp = temp->next;
+        }
+    }
+}
+
+//depthFirstSearch
 void breadthFirstSearch(vector<vertices> v, node **res, int x)
 {
     vector<int> visited; // track of numbers which already were in queue
     queue<int> Q;
     node *temp;
-    //node *temp = *retAddress(v,x);
-    //Q.push((temp->data)); //starting point of breadthFirstSearch
+    //First pushing the startingPoint
     Q.push(x);
     visited.push_back(x);
+
     //mainIteration
     while (!Q.empty())
     {
         int foo = Q.front();
         Q.pop();
-        //get the address of 
-        temp = *retAddress(v,foo); 
+        //get the address of
+        temp = *retAddress(v, foo);
         insertAtTail(res, foo); // inserting at res
         //visited.push_back(foo);
         while (temp != NULL)
@@ -105,31 +136,7 @@ void breadthFirstSearch(vector<vertices> v, node **res, int x)
             temp = temp->next;
         }
     }
-
-/*
-        links_of_foo = something;
-        for (a in links_of_foo):
-            if a in visited: continue
-            Q.push(a);
-        */
-/* code */
-
-// vector<int> q;
-// node* temp = *row;
-// while (temp != NULL){
-//     if(checkQ) {
-//     q.push_back((temp->data));
-//     }
-//     temp = temp->next;
-// }
-// insertAtTail(res,(*q.begin()));
-// q.erase(q.begin());
-
-//res[count] = q.begin();
-//count += 1;
 }
-
-//depthFirstSearch
 
 //SampleAdjacencyList
 // Adjacency list of vertex 0 head->1->4
@@ -141,8 +148,6 @@ void breadthFirstSearch(vector<vertices> v, node **res, int x)
 // Adjacency list of vertex 3 head->1->2->4
 
 // Adjacency list of vertex 4 head->0->1->3
-
-
 
 int main()
 {
@@ -165,15 +170,11 @@ int main()
     {
         struct vertices a;
         a.val = *i;
-        // if (count > 4)
-        //     continue;
         a.firstAddress = &row[count];
-        cout << a.firstAddress<<"\n";
         count++;
         v.push_back(a);
     }
-    cout << "yoo addres sof 0"<<retAddress(v,0);
-    insertAtTail(retAddress(v,0), 1);
+    insertAtTail(retAddress(v, 0), 1);
     insertAtTail(retAddress(v, 0), 4);
     insertAtTail(retAddress(v, 1), 0);
     insertAtTail(retAddress(v, 1), 2);
@@ -187,48 +188,12 @@ int main()
     insertAtTail(retAddress(v, 4), 0);
     insertAtTail(retAddress(v, 4), 1);
     insertAtTail(retAddress(v, 4), 3);
-    
-    printList(retAddress(v, 0));
-    
-    breadthFirstSearch(v,&res, 0);
-    cout<< "Printing bfs" << endl;
+    //calling bfs and storing result in our linked list (res)
+    breadthFirstSearch(v, &res, 0);
+    //depthFirstSearch(v, &res, 0);
+
+    cout << "\n Printing bfs" << endl;
     printList(&res);
-
-    // insertAtTail(&row[0], 4);
-    // insertAtTail(&row[1], 0);
-    // insertAtTail(&row[1], 2);
-    // insertAtTail(&row[1], 3);
-    // insertAtTail(&row[1], 4);
-    // insertAtTail(&row[2], 1);
-    // insertAtTail(&row[2], 3);
-    // insertAtTail(&row[3], 4);
-    // insertAtTail(&row[3], 2);
-    // insertAtTail(&row[3], 1);
-    // insertAtTail(&row[4], 0);
-    // insertAtTail(&row[4], 1);
-    // insertAtTail(&row[4], 3);
-    // printList(&row[0]);
-    // cout << "\n";
-    // printList(&row[1]);
-    // cout << "\n";
-    // printList(&row[2]);
-    // cout << "\n";
-    // printList(&row[3]);
-    // cout << "\n";
-    // printList(&row[4]);
-    // cout << "\n";
-
-    // vector<int> vertices;
-    // vertices.push_back(0);
-    // vertices.push_back(1);
-    // vertices.push_back(2);
-    // cout << retAddress(vertices,1) << endl;
-    // cout << retAddress(vertices,2)<<endl;
-    // int *p;
-    // int a=7;
-    // p = &a;
-    //cout << *p << " yo " <<p<<" yoo "<<&p<<"  yoooo "<<&a<<endl;
-    
 
     return 0;
 }
