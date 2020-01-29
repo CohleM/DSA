@@ -1,3 +1,6 @@
+//graph : graph includes AdjacencyList implementating linkedlist
+//graphTraversal : breadthFirstSearch and deapthFirstSearch 
+//preRequsites STL : vector - creates list dynamically , stack , queue 
 #include <iostream>
 #include <queue>
 #include<stack>
@@ -5,7 +8,6 @@
 using namespace std;
 
 //linkedListSection
-
 struct node
 {
     int data;
