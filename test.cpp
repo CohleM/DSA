@@ -149,7 +149,7 @@ void breadthFirstSearch(vector<vertices> v, node **res, int x)
 
 // Adjacency list of vertex 3 head->1->2->4
 
-// Adjacency list of vertex 4 head->0->1->3
+// Adjacency list of vertex 4 head->0->1->3 .
 
 int main()
 {
@@ -194,7 +194,7 @@ int main()
     breadthFirstSearch(v, &res, 0);
     //depthFirstSearch(v, &res, 0);
 
-    cout << "\n Printing bfs" << endl;
+    cout << "\n Printing the sequence of breadthFirstSearch" << endl;
     printList(&res);
 
     return 0;
